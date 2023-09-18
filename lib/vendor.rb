@@ -20,7 +20,11 @@ class Vendor
   end
 
   def stock(item, quantity)
-    @inventory[item] = quantity
+    if @inventory.has_key?(item)
+      @inventory[item] += quantity
+    else
+      @inventory[item] = quantity
+    end
   end
 
   def potential_revenue

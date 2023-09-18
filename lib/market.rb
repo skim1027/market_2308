@@ -27,4 +27,43 @@ class Market
     end
     vendors_sell
   end
+
+  def sorted_item_list
+    vendors_items = []
+    @vendors.each do |vendor|
+      vendor.inventory.each do |inventory|
+        vendors_items << inventory.first.name
+      end
+    end
+    vendors_items.uniq.sort
+  end
+
+  def total_inventory
+    total_inventory = Hash.new{ |h, k| h[k] = {} }
+    key = @vendors.map do |vendor|
+      vendor.inventory
+    end
+
+    values = {}
+    @vendors.map do |vendor|
+      vendor.inventory.each do |item|
+        values.store(:quantity, item[1])
+      end
+      values.store(:vendors, vendor)
+    end
+
+    total_inventory[key] = values
+  end
+
+  def overstocked_item
+    overstocked = []
+    @vendors.each do |vendor|
+      vendor.inventory.each do |item|
+        if item[1] > 50
+          overstocked << item
+        end
+      end
+    end
+    overstocked.flatten
+  end
 end
