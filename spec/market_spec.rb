@@ -71,4 +71,49 @@ RSpec.describe Market do
     end
   end
 
+  describe '#sorted_item_list' do
+    it 'list sorted item' do
+      @vendor1.stock(@item1, 35)
+      @vendor1.stock(@item2, 7) 
+      @vendor2.stock(@item2, 7) 
+      @vendor2.stock(@item4, 50)    
+      @vendor2.stock(@item3, 25)
+      @vendor3.stock(@item1, 65)
+      @market.add_vendor(@vendor1) 
+      @market.add_vendor(@vendor2) 
+      @market.add_vendor(@vendor3)
+      expect(@market.sorted_item_list).to eq(['Banana Nice Cream', 'Peach', 'Peach-Raspberry Nice Cream', 'Tomato'])
+    end
+  end
+
+  describe '#total_inventory' do
+    it 'list total inventory' do
+      @vendor1.stock(@item1, 35)
+      @vendor1.stock(@item2, 7) 
+      @vendor2.stock(@item2, 7) 
+      @vendor2.stock(@item4, 50)    
+      @vendor2.stock(@item3, 25)
+      @vendor3.stock(@item1, 65)
+      @market.add_vendor(@vendor1) 
+      @market.add_vendor(@vendor2) 
+      @market.add_vendor(@vendor3)
+      expect(@market.total_inventory).to eq(Hash)
+      expect(@market.total_inventory.first.key).to eq(Item)
+    end
+  end
+
+  describe '#overstocked_item' do
+    it 'shows overstocked item' do
+      @vendor1.stock(@item1, 35)
+      @vendor1.stock(@item2, 7) 
+      @vendor2.stock(@item2, 7) 
+      @vendor2.stock(@item4, 51)    
+      @vendor2.stock(@item3, 25)
+      @vendor3.stock(@item1, 65)
+      @market.add_vendor(@vendor1) 
+      @market.add_vendor(@vendor2) 
+      @market.add_vendor(@vendor3)
+      expect(@market.overstocked_item).to eq([@item1, @item4])
+    end
+  end
 end
