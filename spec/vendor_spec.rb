@@ -10,7 +10,7 @@ RSpec.describe Vendor do
 
   describe '#initialize' do
     it 'initialize' do
-      expect(@vendor).to be_instance_of(Vender)
+      expect(@vendor).to be_instance_of(Vendor)
     end
 
     it 'has a name' do
