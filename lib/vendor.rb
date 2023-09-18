@@ -20,9 +20,6 @@ class Vendor
   end
 
   def stock(item, quantity)
-    key = @inventory[item]
-    value = quantity
-    key = quantity
-
+    @inventory[item] = quantity
   end
 end
